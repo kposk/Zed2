@@ -6,7 +6,7 @@ import cv2
 
 def InitParams():
     init_params = sl.InitParameters()
-    init_params.depth_mode = sl.DEPTH_MODE.NEURAL
+    init_params.depth_mode = sl.DEPTH_MODE.NEURAL  # Use Ultra depth mode
     init_params.coordinate_units = sl.UNIT.METER
     init_params.camera_resolution = sl.RESOLUTION.HD720
     init_params.depth_minimum_distance = 0.15
@@ -42,19 +42,22 @@ def main():
         zed.close()
         exit()
 
-    PointCloud = sl.Mat()
+    Depth_image = sl.Mat()
     Left_image = sl.Mat()
     measure = sl.Mat()
 
     while 1:
 
         if zed.grab(rt_param) == sl.ERROR_CODE.SUCCESS:
+            zed.retrieve_image(Depth_image, sl.VIEW.DEPTH)
+            depth_image_rgba = Depth_image.get_data()
+            depth_image = cv2.cvtColor(depth_image_rgba, cv2.COLOR_RGBA2RGB)
+            cv2.imshow('depth', depth_image)
 
-            zed.retrieve_measure(PointCloud, sl.MEASURE.XYZRGBA)
-            pc = PointCloud.get_data()
-            cv2.imshow("Point Cloud", pc)
+            zed.retrieve_measure(measure, sl.MEASURE.DEPTH)
+            cv2.setMouseCallback('depth', onMouse)
 
-            #print(f'[x, y] = {listpos[0]} [PIXEL]||| Distance = {round(measure.get_value(listpos[0][0], listpos[0][1])[1], 4)} [METER]')
+            print(f'[x, y] = {listpos[0]} [PIXEL]||| Distance = {round(measure.get_value(listpos[0][0], listpos[0][1])[1], 4)} [METER]')
             #print(f'distance = {measure.get_value(xg, yg)}, x = {xg}, y = {yg}')
 
             #zed.retrieve_image(Left_image, sl.VIEW.LEFT)
