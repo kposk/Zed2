@@ -1,3 +1,3 @@
 # Zed2
 
-Um dia eu escrevo bonitinho aqui XD
+Mapa de Disparidade da ZED 2
