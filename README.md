@@ -1,3 +1,3 @@
 # Zed2
 
-Mapa de Disparidade da ZED 2
+Aqui vou testar as diferentes funcoes da camera ZED :)
