@@ -6,7 +6,7 @@ import cv2
 
 def InitParams():
     init_params = sl.InitParameters()
-    init_params.depth_mode = sl.DEPTH_MODE.NEURAL  # Use Ultra depth mode
+    init_params.depth_mode = sl.DEPTH_MODE.NEURAL
     init_params.coordinate_units = sl.UNIT.METER
     init_params.camera_resolution = sl.RESOLUTION.HD720
     init_params.depth_minimum_distance = 0.15
